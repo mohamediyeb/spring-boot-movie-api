@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: film-api
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/api
+tags:
+  - name: film-controller-api
+    description: film Controller Api
+paths:
+  /films:
+    post:
+      tags:
+        - film-controller-api
+      summary: create film
+      operationId: createFilm
+      requestBody:
+        description: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+
+  /films/{id}:
+    get:
+      tags:
+        - film-controller-api
+      summary: get film by id
+      operationId: getFilmById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+            default: 1l
+      responses:
+        200:
+          description: Expected response to valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Film'
+
+
+components:
+  schemas:
+    Film:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        titre:
+          type: string
+        description:
+          type: string
+        acteurs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Acteur'
+    Acteur:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nom:
+          type: string
+        prenom:
+          type: string
+
